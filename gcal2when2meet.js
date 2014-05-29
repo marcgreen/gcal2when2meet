@@ -5,14 +5,12 @@ document.body.appendChild(document.createElement('script')).src =
 document.body.appendChild(document.createElement('script')).src =
   "https://apis.google.com/js/client.js?onload=GCAL";
 
-// when2meet
+// when2meet->gcal authentication
 var clientId = "537319596359-qhp810o8dqoso7bt1lqqgn057d30dsht.apps.googleusercontent.com";
-//var apiKey = "AIzaSyANlPfMI_JS61fKVcKO0n4NZpVbFhgtSf4";
 var scopes = "https://www.googleapis.com/auth/calendar.readonly";
 
 function load() {
   console.log("load");
-  //gapi.client.setApiKey(apiKey);
   gapi.auth.init(function () {
     gapi.client.load('calendar', 'v3', function () {
       reqCalendarList().then(function (calendars) {
@@ -77,23 +75,22 @@ function reqEvents(calendar) {
 var errors = [];
 
 function deselectEvent(event) {
-  console.log(event.start.dateTime);
   try {
     var startTime = convertTime(event.start.dateTime);
     var endTime = convertTime(event.end.dateTime) - 900;
-/*    
+    /*
     // Adjust data as necessary if w2m is in "day of week" mode
     if (isDoWCalendar() && event.recurringEventId) { // TODO check value of this on non recurring event
         startTime = normalizeDateTime(startTime);
         endtime = normalizeDateTime(endTime);
     }
-*/    
+  */
     toggleRange(startTime, endTime, false);
   } catch (e) {
     errors.push(e);
   }
 }
-/*
+
 // seconds until midnight of given weekday of some fixed week on w2m
 var normalizationConstants = [
     279766800, // Sunday
@@ -115,7 +112,7 @@ function isDoWCalendar() {
 function normalizeDateTime() {
     
 }
-*/
+
 
 function selectAll() {
   toggleRange(TimeOfSlot[0], TimeOfSlot[TimeOfSlot.length-1], true);
