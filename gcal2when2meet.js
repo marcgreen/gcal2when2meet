@@ -7,15 +7,12 @@ document.body.appendChild(document.createElement('script')).src =
 
 // when2meet
 var clientId = "537319596359-qhp810o8dqoso7bt1lqqgn057d30dsht.apps.googleusercontent.com";
-// localhost
-//var clientId = "928220966147-mt5jcobiop2nh0461sa5iochjslrjg8f.apps.googleusercontent.com";
-//var apiKey = "AIzaSyDSR5w4amX6UDxyuR0xylGj9hKh4jjKtZQ";
-var apiKey = "AIzaSyANlPfMI_JS61fKVcKO0n4NZpVbFhgtSf4";
+//var apiKey = "AIzaSyANlPfMI_JS61fKVcKO0n4NZpVbFhgtSf4";
 var scopes = "https://www.googleapis.com/auth/calendar.readonly";
 
 function load() {
   console.log("load");
-  gapi.client.setApiKey(apiKey);
+  //gapi.client.setApiKey(apiKey);
   gapi.auth.init(function () {
     gapi.client.load('calendar', 'v3', function () {
       reqCalendarList().then(function (calendars) {
