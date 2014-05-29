@@ -150,7 +150,8 @@ function convertTime(gcalTime) {
     d.setMinutes(m);
     d.setHours(h);
   }
-  return d.getTime() / 1000;
+  // convert from UTC to local time
+  return (d.getTime() / 1000) - (d.getTimezoneOffset() * 60);
 }
 
 window.GCAL = load;
