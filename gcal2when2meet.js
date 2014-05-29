@@ -6,10 +6,11 @@ document.body.appendChild(document.createElement('script')).src =
   "https://apis.google.com/js/client.js?onload=GCAL";
 
 // when2meet
-var clientId = "928220966147.apps.googleusercontent.com";
+var clientId = "537319596359-qhp810o8dqoso7bt1lqqgn057d30dsht.apps.googleusercontent.com";
 // localhost
 //var clientId = "928220966147-mt5jcobiop2nh0461sa5iochjslrjg8f.apps.googleusercontent.com";
-var apiKey = "AIzaSyDSR5w4amX6UDxyuR0xylGj9hKh4jjKtZQ";
+//var apiKey = "AIzaSyDSR5w4amX6UDxyuR0xylGj9hKh4jjKtZQ";
+var apiKey = "AIzaSyANlPfMI_JS61fKVcKO0n4NZpVbFhgtSf4"l
 var scopes = "https://www.googleapis.com/auth/calendar.readonly";
 
 function load() {
@@ -79,14 +80,45 @@ function reqEvents(calendar) {
 var errors = [];
 
 function deselectEvent(event) {
+  console.log(event.start.dateTime);
   try {
     var startTime = convertTime(event.start.dateTime);
     var endTime = convertTime(event.end.dateTime) - 900;
+/*    
+    // Adjust data as necessary if w2m is in "day of week" mode
+    if (isDoWCalendar() && event.recurringEventId) { // TODO check value of this on non recurring event
+        startTime = normalizeDateTime(startTime);
+        endtime = normalizeDateTime(endTime);
+    }
+*/    
     toggleRange(startTime, endTime, false);
   } catch (e) {
     errors.push(e);
   }
 }
+/*
+// seconds until midnight of given weekday of some fixed week on w2m
+var normalizationConstants = [
+    279766800, // Sunday
+    279763200, // Monday
+    279849600,
+    279936000,
+    280022400,
+    280108800,
+    280195200
+];
+
+function isDoWCalendar() {
+    var d = new Date(StepOfTime[0]);
+    
+    return (d.getTime() > normalizationConstants[0] &&
+            d.getTime() < normalizationConstants[0]*7);
+}
+
+function normalizeDateTime() {
+    
+}
+*/
 
 function selectAll() {
   toggleRange(TimeOfSlot[0], TimeOfSlot[TimeOfSlot.length-1], true);
