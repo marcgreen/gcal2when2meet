@@ -10,7 +10,7 @@ var clientId = "537319596359-qhp810o8dqoso7bt1lqqgn057d30dsht.apps.googleusercon
 // localhost
 //var clientId = "928220966147-mt5jcobiop2nh0461sa5iochjslrjg8f.apps.googleusercontent.com";
 //var apiKey = "AIzaSyDSR5w4amX6UDxyuR0xylGj9hKh4jjKtZQ";
-var apiKey = "AIzaSyANlPfMI_JS61fKVcKO0n4NZpVbFhgtSf4"l
+var apiKey = "AIzaSyANlPfMI_JS61fKVcKO0n4NZpVbFhgtSf4";
 var scopes = "https://www.googleapis.com/auth/calendar.readonly";
 
 function load() {
