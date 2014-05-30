@@ -61,6 +61,8 @@ function reqEvents(calendar) {
   gapi.client.calendar.events.list({
     calendarId: calendar.id,
     singleEvents: true, // expand recurring events
+    // TODO request events in DoW mode 
+    // TODO fix timezone error in requesting events
     timeMin: new Date(TimeOfSlot[0] * 1000).toISOString(),
     timeMax: new Date(TimeOfSlot[TimeOfSlot.length-1] * 1000).toISOString()
   }).execute(function (res) {
@@ -78,6 +80,8 @@ function deselectEvent(event) {
   try {
     var startTime = convertTime(event.start.dateTime);
     var endTime = convertTime(event.end.dateTime) - 900;
+    
+    console.log(event);
     /*
     // Adjust data as necessary if w2m is in "day of week" mode
     if (isDoWCalendar() && event.recurringEventId) { // TODO check value of this on non recurring event
