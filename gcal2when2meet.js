@@ -132,6 +132,14 @@ function selectAll() {
 }
 
 function toggleRange(startTime, endTime, makeAvailable) {
+  // Don't try to select times that aren't on w2m
+  if (startTime < TimeOfSlot[0]) {
+    startTime = TimeOfSlot[0];
+  }
+  if (endTime > TimeOfSlot[TimeOfSlot.length-1]) {
+    endTime = TimeOfSlot[TimeOfSlot.length-1];
+  }
+  
   try {
     SelectFromHere(startTime);
     SelectToHere(endTime);
