@@ -1,3 +1,5 @@
+// TODO test on chrome and ie
+
 (function () {
 
 document.body.appendChild(document.createElement('script')).src = 
@@ -57,14 +59,22 @@ var events = [];
 
 function reqEvents(calendar) {
   var deferred = $.Deferred();
+  
+  var secsInDay = 86400;
+    
+  // TODO fix timezone error in requesting events
+  //   specifically, need to convert from "America/New York" (calendar.timeZone) 
+  //   to -240mins somehow. for now, we'll be liberal and account for any 
+  //   timezone by adding/subtracting number of secs in a day
+  var timeMin = new Date((TimeOfSlot[0] - secsInDay) * 1000);
+  var timeMax = new Date((TimeOfSlot[TimeOfSlot.length-1] + secsInDay) * 1000);
 
   gapi.client.calendar.events.list({
     calendarId: calendar.id,
     singleEvents: true, // expand recurring events
     // TODO request events in DoW mode 
-    // TODO fix timezone error in requesting events
-    timeMin: new Date(TimeOfSlot[0] * 1000).toISOString(),
-    timeMax: new Date(TimeOfSlot[TimeOfSlot.length-1] * 1000).toISOString()
+    timeMin: timeMin.toISOString(),
+    timeMax: timeMax.toISOString()
   }).execute(function (res) {
     events.push(res);
     console.log(res);
@@ -80,8 +90,7 @@ function deselectEvent(event) {
   try {
     var startTime = convertTime(event.start.dateTime);
     var endTime = convertTime(event.end.dateTime) - 900;
-    
-    console.log(event);
+
     /*
     // Adjust data as necessary if w2m is in "day of week" mode
     if (isDoWCalendar() && event.recurringEventId) { // TODO check value of this on non recurring event
@@ -154,7 +163,8 @@ function convertTime(gcalTime) {
     d.setMinutes(m);
     d.setHours(h);
   }
-  // convert from UTC to local time
+  // convert from UTC to local time. this is needed b/c w2m uses UTC time,
+  //   but users assume it is their local time. we account for the bias here.
   return (d.getTime() / 1000) - (d.getTimezoneOffset() * 60);
 }
 
